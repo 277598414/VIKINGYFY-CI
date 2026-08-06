@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2026 VIKINGYFY
+# Copyright (C) 2026
 
 #CI项目
 name: WRT-TEST
@@ -10,18 +10,17 @@ on:
   workflow_dispatch:
     inputs:
       CONFIG:
-        default: 'MEDIATEK-WIFI-YES'
+        default: 'MEDIATEK'
         required: true
         type: choice
         options:
+          - MEDIATEK
+          - ROCKCHIP
+          - X86
           - IPQ60XX-WIFI-YES
           - IPQ60XX-WIFI-NO
           - IPQ807X-WIFI-YES
           - IPQ807X-WIFI-NO
-          - MEDIATEK-WIFI-YES
-          - MEDIATEK-WIFI-NO
-          - ROCKCHIP
-          - X86
           - TEST
       SOURCE:
         default: 'VIKINGYFY/immortalwrt'
@@ -58,15 +57,15 @@ jobs:
       #编译配置
       WRT_CONFIG: ${{inputs.CONFIG}}
       #默认主题
-      WRT_THEME: aurora
+      WRT_THEME: bootstrap
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: ImmortalWrt
       #默认WIFI名称
-      WRT_SSID: OWRT
+      WRT_SSID: ImmortalWrt
       #默认WIFI密码
       WRT_WORD: 12345678
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 192.168.50.1
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
