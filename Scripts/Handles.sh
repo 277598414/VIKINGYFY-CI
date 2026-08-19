@@ -2,7 +2,11 @@
 # SPDX-License-Identifier: MIT
 # Copyright (C) 2026
 
-PKG_PATH="$GITHUB_WORKSPACE/wrt/package/"
+if [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "$GITHUB_WORKSPACE/wrt/package" ]; then
+	PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
+else
+	PKG_PATH="$(pwd)"
+fi
 
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
