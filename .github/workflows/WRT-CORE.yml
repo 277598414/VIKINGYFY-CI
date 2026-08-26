@@ -64,6 +64,11 @@ jobs:
   core:
     name: ${{inputs.WRT_SOURCE}}
     runs-on: ubuntu-latest
+    outputs:
+      cache_prefix: ${{steps.initialize-values.outputs.cache_prefix}}
+      legacy_cache_prefix: ${{steps.initialize-values.outputs.legacy_cache_prefix}}
+      cache_key: ${{steps.clone-code.outputs.cache_key}}
+      source_hash: ${{steps.clone-code.outputs.source_hash}}
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
