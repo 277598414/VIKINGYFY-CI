@@ -22,18 +22,6 @@ FIX() {
 	fi
 }
 
-#关闭GnuTLS的TPM2自动探测，避免引入未声明的TSS2依赖
-DISABLE_GNUTLS_TPM2() {
-	sed -Ei '/^include[[:blank:]]+\$\(INCLUDE_DIR\)\/package\.mk[[:blank:]]*(#.*)?$/a CONFIGURE_ARGS += --without-tpm2' "$1" &&
-		grep -Fxq 'CONFIGURE_ARGS += --without-tpm2' "$1"
-}
-
-GNUTLS_MAKEFILE="$FEEDS_PATH/packages/libs/gnutls/Makefile"
-if [[ -f "$PACKAGE_PATH/libs/tpm2-tss/Makefile" && -f "$GNUTLS_MAKEFILE" ]] &&
-	! grep -Eq -- '^([^#]*[[:blank:]]|[[:blank:]]*CONFIGURE_ARGS[[:blank:]]*[+:?]?=)?--(with|without)-tpm2([=[:blank:]#]|$)' "$GNUTLS_MAKEFILE"; then
-	FIX "gnutls" "${GNUTLS_MAKEFILE%/*}" DISABLE_GNUTLS_TPM2 "$GNUTLS_MAKEFILE"
-fi
-
 #修改argon主题字体和颜色
 FIX "theme-argon" "$PACKAGE_PATH/luci-theme-argon" sed -i \
 	"s/primary '.*'/primary '#31a1a1'/g; s/'0.2'/'0.5'/g; s/'none'/'bing'/g; s/'600'/'normal'/g" \
